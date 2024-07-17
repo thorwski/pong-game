@@ -15,7 +15,7 @@ import javax.swing.JFrame;
 public class Game extends Canvas implements Runnable, KeyListener {
 
 	private static final long serialVersionUID = 1L;
-	public static final int WIDTH = 1000;
+	public static final int WIDTH = 1024;
 	public static final int HEIGHT = WIDTH * 9 / 16;
 	public static final String TITLE = "Pong";
 
@@ -27,6 +27,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 	private Ball ball;
 	private Paddle userPaddle;
 	private Paddle computerPaddle;
+	private Score userScore;
+	private Score computerScore;
 
 	private boolean upPressed = false;
 	private boolean downPressed = false;
@@ -35,6 +37,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		ball = new Ball(Ball.BALL_SIZE, Ball.CENTER_X, Ball.CENTER_Y, Ball.BALL_SPEED, Ball.BALL_SPEED, Color.WHITE);
 		userPaddle = new Paddle(Paddle.USER_POSITION, Paddle.CENTER_Y, Paddle.PADDLE_WIDTH, Paddle.PADDLE_HEIGHT, Color.ORANGE);
 		computerPaddle = new Paddle(Paddle.COMPUTER_POSITION, Paddle.CENTER_Y, Paddle.PADDLE_WIDTH, Paddle.PADDLE_HEIGHT, Color.RED);
+		userScore = new Score("Player: ", Score.USER_POSITION_X, Score.POSITION_Y, Color.WHITE);
+		computerScore = new Score("Computer: ", Score.COMPUTER_POSITION_X, Score.POSITION_Y, Color.WHITE);
 
 		addKeyListener(this);
 		setFocusable(true);
@@ -97,6 +101,8 @@ public class Game extends Canvas implements Runnable, KeyListener {
 		ball.draw(g);
 		userPaddle.draw(g);
 		computerPaddle.draw(g);
+		userScore.draw(g);
+		computerScore.draw(g);
 
 		g.dispose();
 

@@ -1,4 +1,5 @@
 package Game;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.io.File;
@@ -17,11 +18,11 @@ public class Paddle {
 	private Color color;
 
 	public static final int PADDLE_WIDTH = 20;
-	public static final int PADDLE_HEIGHT = 125;
+	public static final int PADDLE_HEIGHT = 120;
 	public static final int PADDLE_SPEED = 6;
 
 	private Clip hitPaddleSound;
-	
+
 	public static final int USER_POSITION = 30;
 	public static final int COMPUTER_POSITION = Game.WIDTH - PADDLE_WIDTH - 30;
 	public static final int CENTER_Y = (Game.HEIGHT - PADDLE_HEIGHT) / 2;
@@ -55,6 +56,31 @@ public class Paddle {
 		}
 	}
 
+	public void moveAi(Ball b) {
+		int ballY = b.getY();
+		int paddleCenter = y + height / 2;
+
+//		if (Math.abs(paddleCenter - ballY) > height / 2) {
+//			if (paddleCenter < ballY) {
+//				y += PADDLE_SPEED;
+//			} else if (paddleCenter > ballY) {
+//				y -= PADDLE_SPEED;
+//			}
+//		}
+
+		int distance = Math.abs(paddleCenter - ballY);
+		int adjustedSpeed = (int) (PADDLE_SPEED * (distance / (float) height));
+		adjustedSpeed = Math.max(adjustedSpeed, PADDLE_SPEED);
+
+		if (distance > height / 4) {
+			if (paddleCenter < ballY) {
+				y += adjustedSpeed;
+			} else if (paddleCenter > ballY) {
+				y -= adjustedSpeed;
+			}
+		}
+	}
+
 	public void moveUp() {
 		if (y - PADDLE_SPEED >= 0) {
 			y -= PADDLE_SPEED;
@@ -77,7 +103,7 @@ public class Paddle {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void playHitPaddleSound() {
 		hitPaddleSound.setFramePosition(0);
 		hitPaddleSound.start();
